@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - logicalFilePath: 20240305-10-create-table-user-role.yaml
+  - changeSet:
+      id: 20240305-1
+      author: RuslanAghakishiyev
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: ID
+                  type: SERIAL
+              - column:
+                  constraints:
+                    nullable: false
+                  name: ROLE
+                  remarks: User role
+                  type: VARCHAR(50)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: USER_ID
+                  remarks: Foreign key to USER table
+                  type: SERIAL
+            remarks: User role entity
+            tableName: USER_ROLE
+        - addForeignKeyConstraint:
+            baseColumnNames: USER_ID
+            baseTableName: USER_ROLE
+            constraintName: FK_USER-ROLE_USER
+            referencedColumnNames: ID
+            referencedTableName: user

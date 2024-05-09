@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.5'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('jUnitVersion', '5.10.2')
+    set('iUnitMockitoVersion', '5.11.0')
+    set('postgresVersion', '42.7.3')
+    set('springJdbcVersion', '6.1.6')
+    set('liquibaseCoreVersion', "4.22.0")
+    set('jjwtVersion', '0.11.5')
+    set('logbackEncoderVersion', "7.3")
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    implementation "org.liquibase:liquibase-core:${liquibaseCoreVersion}"
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: "${jjwtVersion}"
+    implementation "net.logstash.logback:logstash-logback-encoder:${logbackEncoderVersion}"
+    implementation 'ch.qos.logback:logback-classic'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: "${iUnitMockitoVersion}"
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: "${jUnitVersion}"
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "${jUnitVersion}"
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "${jUnitVersion}"
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: "${jjwtVersion}"
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: "${jjwtVersion}"
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
